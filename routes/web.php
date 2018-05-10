@@ -22,3 +22,6 @@ Route::get('/nama url', function(){
 /*Route::get('/hehe', 'PageController@index'){
 	return view('jadwal');
 }*/
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
