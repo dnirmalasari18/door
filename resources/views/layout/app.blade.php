@@ -9,6 +9,6 @@
     </head>
     <body>
         @include('navbar');
-		@yield('content');
+		@yield('content')
     </body>
 </html>

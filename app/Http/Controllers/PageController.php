@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Tempat;
 
 class PageController extends Controller
 {
@@ -12,6 +13,7 @@ class PageController extends Controller
     	return view ('home')->with('awal',$awal);
     }
     public function jadwalpage(){
-    	return view ('jadwal');
+    	$tempats=Tempat::all();
+    	return view ('jadwal')-> with('tempats',$tempats);
     }
 }

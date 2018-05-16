@@ -11,17 +11,17 @@
 |
 */
 
-Route::get('/', 'PageController@homepage');
+//Route::get('/', 'PageController@homepage');
 
 Route::get('/jadwal', 'PageController@jadwalpage');
 
-Route::get('/nama url', function(){
-    return 'kalimat';
+Route::get('/', function(){
+    return view('welcome');
 });
 
 /*Route::get('/hehe', 'PageController@index'){
 	return view('jadwal');
 }*/
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('home','PageController@homepage');
+//Route::get('/home', 'HomeController@index')->name('home');
