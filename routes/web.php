@@ -13,8 +13,9 @@
 
 //Route::get('/', 'PageController@homepage');
 
+//Route::get('/home', 'PageController@homepage');
 Route::get('/jadwal', 'PageController@jadwalpage');
-
+Route::get('/contact','PageController@contactpage');
 Route::get('/', function(){
     return view('welcome');
 });
@@ -23,5 +24,4 @@ Route::get('/', function(){
 	return view('jadwal');
 }*/
 Auth::routes();
-//Route::get('home','PageController@homepage');
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
