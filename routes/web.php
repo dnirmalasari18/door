@@ -13,9 +13,10 @@
 
 //Route::get('/', 'PageController@homepage');
 
-//Route::get('/home', 'PageController@homepage');
-Route::get('/jadwal', 'PageController@jadwalpage');
+Route::get('/main', 'PageController@homepage');
+Route::get('/schedule', 'PageController@jadwalpage');
 Route::get('/contact','PageController@contactpage');
+Route::get('/bookhere', 'PageController@bookinghere');
 Route::get('/', function(){
     return view('welcome');
 });

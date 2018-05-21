@@ -10,12 +10,15 @@
     </div>-->
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/home">Home</a></li>
+        <li><a href="/main">Home</a></li>
         <li><a href="/jadwal">Schedule</a></li>
         <li><a href="/contact">Contact</a></li>
         @guest
           <li><a href="{{ route('login') }}">Sign In Admin</a></li>
         @else
+          <li>
+            Accepting
+          </li>
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
              Hello {{ Auth::user()->name }} <span class="caret"></span>
@@ -33,8 +36,9 @@
               </li>
             </ul>
           </li>
+
         @endguest
-        <li> Book Here! </li>
+        <li><a href="/bookhere"> Book Here! </a></li>
       </ul>
     </div>
   </div>

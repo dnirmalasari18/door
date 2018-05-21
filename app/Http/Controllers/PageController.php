@@ -8,9 +8,8 @@ use App\Tempat;
 class PageController extends Controller
 {
     public function homepage(){
-    	$awal = 'Welcome to Door! A reservation website for Informatics Department';
     	//return view ('home', compact('awal'));
-    	return view ('main')->with('awal',$awal);
+    	return view ('main');
     }
     public function jadwalpage(){
     	$tempats=Tempat::all();
@@ -18,5 +17,9 @@ class PageController extends Controller
     }
     public function contactpage(){
     	return view ('contact');
+    }
+
+    public function bookinghere(){
+        return view('bookhere');
     }
 }
