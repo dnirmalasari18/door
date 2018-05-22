@@ -11,20 +11,22 @@
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a href="/main">Home</a></li>
-        <li><a href="/jadwal">Schedule</a></li>
+        <li><a href="/schedule">Schedule</a></li>
         <li><a href="/contact">Contact</a></li>
         @guest
           <li><a href="{{ route('login') }}">Sign In Admin</a></li>
         @else
-          <li>
-            Accepting
-          </li>
+          <li><a href="/accepting">Accepting</li>
+            
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
              Hello {{ Auth::user()->name }} <span class="caret"></span>
             </a>
 
             <ul class="dropdown-menu">
+              @if(Auth::user()->role=="master")
+                <li> <a href="/admin">Administrator Page</a></li>
+              @endif
               <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">

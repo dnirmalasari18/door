@@ -21,8 +21,16 @@ Route::get('/', function(){
     return view('welcome');
 });
 
+
 /*Route::get('/hehe', 'PageController@index'){
 	return view('jadwal');
 }*/
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/accepting','HomeController@accepting');
+
+Route::group(['middleware' => ['auth', 'master']], function() {
+    // your routes
+    Route::get('/admin','HomeController@adminpage');
+});
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

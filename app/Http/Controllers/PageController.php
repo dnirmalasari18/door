@@ -22,4 +22,5 @@ class PageController extends Controller
     public function bookinghere(){
         return view('bookhere');
     }
+    
 }

@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -43,5 +45,11 @@ class LoginController extends Controller
         request()->merge([$this->username => $loginType]);
 
         return property_exists($this, 'username') ? $this-> username :'email';
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        Session::flush();
+        return redirect('/main');
     }
 }

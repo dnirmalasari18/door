@@ -6,5 +6,7 @@
 
 @section('content')
 	<h1>Book FOrm</h1>
-	sdsadsadaaaaaaaaaaaa
+	tanggal (gimana cara biar ga bisa ngetag tanggal kemaren2?)
+	nama
+	nrp_nip
 @endsection
