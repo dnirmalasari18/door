@@ -21,7 +21,7 @@ class TableController extends Controller
       	$this->validate($request,[
       		'name' => 'required|string|max:255',
             'username' => 'required|string|max:20|unique:users,username',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
       	]);
 
             $admin = new User;

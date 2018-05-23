@@ -26,7 +26,7 @@
             <ul class="dropdown-menu">
               @if(Auth::user()->role=="master")
                 <li> <a href="/admin">Administrator Page</a></li>
-                <li> Change My Password</li>
+                <li> <a href="/changePassword">Change My Password</a></li>
               @endif
               <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();

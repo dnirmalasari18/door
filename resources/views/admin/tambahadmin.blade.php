@@ -37,6 +37,10 @@
     	@endif
 		
 		<br>
+		{{Form::label('cpassword', 'Confirm Password')}}
+		<input name="password_confirmation" type="password" class="form-control" value="" id="password_confirmation"/>
+
+		<br>
 		{{Form::submit('Submit')}}
 	{!! Form::close() !!}
 @endsection
