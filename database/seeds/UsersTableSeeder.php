@@ -16,7 +16,6 @@ class UsersTableSeeder extends Seeder
         User::create([
         	'name'=>'Admin Wadidaw',
         	'username'=>'adminhehe',
-        	'email'=>'admin1@email.com',
         	'password'=>bcrypt('fpdoor'),
             'role'=>'master',
     	]);
@@ -24,7 +23,21 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name'=>'Admin Bukan Mastah',
             'username'=>'admin1',
-            'email'=>'adminnnn@email.com',
+            'password'=>bcrypt('fpdoor'),
+        ]);
+        User::create([
+            'name'=>'Admin Siapa ya',
+            'username'=>'admin2',
+            'password'=>bcrypt('fpdoor'),
+        ]);
+        User::create([
+            'name'=>'Admin Aduh',
+            'username'=>'admin3',
+            'password'=>bcrypt('fpdoor'),
+        ]);
+        User::create([
+            'name'=>'Admin Gabut',
+            'username'=>'admin4',
             'password'=>bcrypt('fpdoor'),
         ]);
     }

@@ -8,6 +8,5 @@ class Tempat extends Model
 {
     //
     protected $table = 'tempats';
-    public $primaryKey = 'id';
    
 }

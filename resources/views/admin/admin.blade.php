@@ -35,30 +35,29 @@ th{
 		<tr>
 			<th>Name</th>
 			<th>Username</th>
-			<th>Email</th>
 			<th>Password</th>
 			<th></th>
-			<th><th>
 		</tr>
 		@if(count($users)<2)
 			<tr>
-				<th colspan="8">You are the only admin here</th>
+				<th colspan="4">You are the only admin here</th>
 			</tr>
 		@elseif(count($users)>1)
+			<form>
 			@foreach($users as $user)
 				@if($user->role!=="master")
 				<tr>
 					<th>{{$user->name}}</th>
 					<th>{{$user->username}}</th>
-					<th>{{$user->email}}</th>
 					<th><button>Change</button></th>
-					<th><button>Edit</button></th>
-					<th><button>Delete</button><th>
+					<th><button>Edit</button>
+						<button formmethod="get" formaction="/deleteAdmin" type="submit" name="user_id" value="{{$user->id}}">Delete</button></th>
 				</tr>
 				@endif
 			@endforeach
+			</form>
 		@endif
 
 	</table>
-	<a><button>Add Admin</button></a>
+	<a href="/addAdmin"><button>Add Admin</button></a>
 @endsection

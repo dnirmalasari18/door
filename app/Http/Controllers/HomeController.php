@@ -26,10 +26,13 @@ class HomeController extends Controller
         return view('home');
     }
     public function accepting(){
-        return view('accept');
+        return view('admin.accept');
     }
     public function adminpage(){
         $users=User::all();
-        return view('admin')->with('users',$users);
+        return view('admin.admin')->with('users',$users);
+    }
+    public function tambahadminpage(){
+        return view('admin.tambahadmin');
     }
 }

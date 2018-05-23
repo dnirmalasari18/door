@@ -26,6 +26,7 @@
             <ul class="dropdown-menu">
               @if(Auth::user()->role=="master")
                 <li> <a href="/admin">Administrator Page</a></li>
+                <li> Change My Password</li>
               @endif
               <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -40,7 +41,7 @@
           </li>
 
         @endguest
-        <li><a href="/bookhere"> Book Here! </a></li>
+        <li><a href="/bookHere"> Book Here! </a></li>
       </ul>
     </div>
   </div>

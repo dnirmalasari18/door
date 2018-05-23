@@ -16,7 +16,7 @@
 Route::get('/main', 'PageController@homepage');
 Route::get('/schedule', 'PageController@jadwalpage');
 Route::get('/contact','PageController@contactpage');
-Route::get('/bookhere', 'PageController@bookinghere');
+Route::get('/bookHere', 'PageController@bookinghere');
 Route::get('/', function(){
     return view('welcome');
 });
@@ -25,12 +25,23 @@ Route::get('/', function(){
 /*Route::get('/hehe', 'PageController@index'){
 	return view('jadwal');
 }*/
+
+
 Auth::routes();
+/*Route::get('/register',function(){
+	return redirect('/main');
+});*/
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/accepting','HomeController@accepting');
 
 Route::group(['middleware' => ['auth', 'master']], function() {
-    // your routes
     Route::get('/admin','HomeController@adminpage');
+    Route::get('/addAdmin','HomeController@tambahadminpage');
+    Route::post('/huhu','TableController@storeUser');
+    /*terkait crud admin*/
+    Route::get('/deleteAdmin','TableController@destroyUser');
+
 });
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+Route::get('/logout', 'Auth.LoginController@logout');
+
