@@ -16,29 +16,14 @@ class TableController extends Controller
         return redirect('/admin');
     }
 
-    public function storeUser()
+    public function storeUser(Request $request)
     {
-        $rules = array([
-        	'name' => 'required|string|max:255',
-            'username' => 'required|string|max:20|unique:users',
+      	$this->validate($request,[
+      		'name' => 'required|string|max:255',
+            'username' => 'required|string|max:20|unique:users,username',
             'password' => 'required|string|min:6',
-        ]);
-        $messages = [
-    		'required' => 'The :attribute field is required.',
-    		'unique' => 'Already taken.',
+      	]);
 
-		];
-        $validator = Validator::make(Input::all(), $rules,$messages);
-
-        
-        if ($validator->fails()) {
-
-           return redirect('/addAdmin')
-                ->withErrors($validator)
-                ->withInput(Input::except('password'));
-
-        } else {
-            // store
             $admin = new User;
             $admin->name     = Input::get('name');
             $admin->username = Input::get('username');
@@ -47,6 +32,6 @@ class TableController extends Controller
 
             // redirect
             return redirect('/admin');
-      	}
+      	
     }
 }

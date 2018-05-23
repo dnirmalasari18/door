@@ -37,7 +37,7 @@ Route::get('/accepting','HomeController@accepting');
 Route::group(['middleware' => ['auth', 'master']], function() {
     Route::get('/admin','HomeController@adminpage');
     Route::get('/addAdmin','HomeController@tambahadminpage');
-    Route::post('/huhu','TableController@storeUser');
+    Route::post('/addAdmin/create','TableController@storeUser');
     /*terkait crud admin*/
     Route::get('/deleteAdmin','TableController@destroyUser');
 
