@@ -15,11 +15,22 @@ class CreatePeminjamsTable extends Migration
     {
         Schema::create('peminjams', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('rolepeminjam_id')->unsigned();
+            $table->foreign('rolepeminjam_id')
+                    ->references('id')->on('rolepeminjams')
+                    ->onDelete('cascade');
             $table->string('namapeminjam');
             $table->string('nrp_nip');
             $table->string('nohp_peminjam');
             $table->timestamps();
         });
+
+        /*Schema::table('peminjams', function (Blueprint $table) {
+            $table->foreign('rolepeminjam_id')
+                    ->references('id')->on('peminjams')
+                    ->onDelete('cascade');
+        });*/
+
     }
 
     /**

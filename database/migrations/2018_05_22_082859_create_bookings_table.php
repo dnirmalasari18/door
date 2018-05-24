@@ -15,7 +15,26 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('namaevent');
+            $table->integer('kegiatan_id')->unsigned();
+            $table->foreign('kegiatan_id')
+                    ->references('id')->on('kegiatans')
+                    ->onDelete('cascade');
+            $table->integer('peminjam_id')->unsigned();
+            $table->foreign('peminjam_id')
+                    ->references('id')->on('peminjams')
+                    ->onDelete('cascade');
+                    //tambahschedule
+            $table->integer('tempat_id')->unsigned();
+            $table->foreign('tempat_id')
+                    ->references('id')->on('tempats')
+                    ->onDelete('cascade');                
+            $table->string('namabooking');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->integer('status_id')->unsigned();
+            $table->foreign('status_id')
+                    ->references('id')->on('statuss')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

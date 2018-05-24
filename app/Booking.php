@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Peminjam as peminjam;
 use App\Kegiatan as kegiatan;
 use App\Tempat as tempat;
+use App\Status as status;
 class Booking extends Model
 {
     //
     protected $table = 'bookings';
-
+    protected $fillable = [
+        'kegiatan_id', 'peminjam_id', 'tempat_id', 'namabooking', 'start_time', 'end_time','status_id',
+    ];
     public function Peminjam(){
     	return $this->hasOne('peminjam');
     }
@@ -20,4 +23,8 @@ class Booking extends Model
     public function Tempat(){
     	return $this->hasOne('tempat');
     }
+    public function Status(){
+        return $this->hasOne('status');
+    }
+
 }
