@@ -7,10 +7,12 @@ use App\RolePeminjam as role;
 class Peminjam extends Model
 {
     //
-    protected $table = 'peminjams';
 
     protected $fillable = [
-        'rolepeminjam_id', 'namapeminjam', 'nrp_nip', 'nohp_peminjam',
+        'rolepeminjam_id', 
+        'namapeminjam', 
+        'nrp_nip', 
+        'nohp_peminjam',
     ];
 
     public function Role(){

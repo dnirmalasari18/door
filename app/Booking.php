@@ -3,27 +3,29 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Peminjam as peminjam;
-use App\Tempat as tempat;
-use App\Status as status;
 class Booking extends Model
 {
     //
-    protected $table = 'bookings';
     protected $fillable = [
-        'kegiatan_id', 'peminjam_id', 'tempat_id', 'namabooking', 'start_time', 'end_time','status_id',
+        'kegiatan_id', 
+        'peminjam_id', 
+        'tempat_id', 
+        'namabooking', 
+        'start_time', 
+        'end_time',
+        'status_id',
     ];
     public function Peminjam(){
-    	return $this->hasOne('peminjam');
+    	return $this->belongsTo('App\Peminjam','peminjam_id','id');
     }
     public  function Kegiatan(){
     	return $this->belongsTo('App\Kegiatan','kegiatan_id','id');
     }
     public function Tempat(){
-    	return $this->belongsTo('tempat');
+    	return $this->belongsTo('App\Tempat','tempat_id','id');
     }
     public function Status(){
-        return $this->hasOne('status');
+        return $this->hasOne('App\Status');
     }
 
 }

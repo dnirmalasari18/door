@@ -34,6 +34,8 @@ Auth::routes();
 });*/
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/accepting','HomeController@accepting');
+Route::post('/verify/{id}','TableController@acceptBooking');
+
 Route::get('/changePassword','HomeController@showChangePassword');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
 

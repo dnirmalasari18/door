@@ -93,5 +93,24 @@ class TableController extends Controller
             // redirect
            return redirect('/bookHere')->with('message', 'The following errors occurred');
     }
+
+    public function acceptBooking(Request $r,$id)
+    {
+        //dd($r);
+        //echo $id;
+        //echo $r['action'];
+        $book =Booking::find($id);
+        if($r['action']==1){
+            $book->status_id=2;
+        //    echo "keganti";
+        }
+        else if ($r['action']==-1){
+            $book->status_id=3;    
+        //    echo "hmm";
+        }
+        $book->save();
+        return redirect('/accepting');
+        
+    }
     
 }

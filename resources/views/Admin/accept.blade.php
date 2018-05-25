@@ -45,38 +45,23 @@ th{
 			<th>Surat Ijin</th>
 			<th>Status</th>
 		</tr>
-		<tr>
-			<th>nama</th>
-			<th>tempat</th>
-			<th>Tanggal</th>
-			<th>Jenis Kegiatan</th>
-			<th>Mulai</th>
-			<th>Akhir</th>
-			<th></th>
-			<th>nrp</th>
-			<th>nama</th>
-			<th>nohp</th>
-			<th><button>show</button></th>
-			<th><button>setujui?</button></th>
-		</tr>
 		@if(count($bookings)>1)
-			<form>
 			@foreach($bookings as $booking)
 				<!--@if($booking['status_id']==1)-->
 					<tr>
 						<th>{{$booking->namabooking}}</th>
-						<th>{{$booking->kegiatan->id}}</th>
-						<th>{{$booking->tempat_id}}</th>
+						<th>{{$booking->kegiatan->namakegiatan}}</th>
+						<th>{{$booking->tempat->namatempat}}</th>
 						<th>{{$booking->dateevent}}</th>
 						<th>{{$booking->start_time}}</th>
 						<th>{{$booking->end_time}}</th>
 						<th></th>
-						<th>nrp{{$booking->peminjam_id}}</th>
-						<th>nama{{$booking->peminjam_id}}</th>
-						<th>nohp{{$booking->peminjam_id}}</th>
+						<th>{{$booking->peminjam->nrp_nip}}</th>
+						<th>{{$booking->peminjam->namapeminjam}}</th>
+						<th>{{$booking->peminjam->nohp_peminjam}}</th>
 						<th><button>Show</button></th>
-						<th><button>Accept</button>
-							<button>Ignore</button></th>
+						<th><form action="/verify/{{$booking->id}}" input="hidden" method="post">{{csrf_field()}}<button value="1" name="action" >Accept</button>
+							<button value="-1" name="action">Ignore</button></form></th>
 					</tr>
 				<!--@endif-->
 			@endforeach
