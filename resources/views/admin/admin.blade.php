@@ -5,26 +5,26 @@
 @endsection
 
 @section('style')
-table {
-  width: 50%;
-  margin: auto;
-  background-color: black(0.5)
-}
+	table {
+	  width: 50%;
+	  margin: auto;
+	  background-color: black(0.5)
+	}
 
-table, th, td {
-    border: 5px solid white;
-    border-collapse: collapse;
-  font-size: 1em; 
-}
-th, td {
-    padding: 10px;
-    text-align: center;
-}
+	table, th, td {
+	    border: 5px solid white;
+	    border-collapse: collapse;
+	  font-size: 1em; 
+	}
+	th, td {
+	    padding: 10px;
+	    text-align: center;
+	}
 
-th{
-  background-color: white;
-  color:black;
-}
+	th{
+	  background-color: white;
+	  color:black;
+	}
 
 @endsection
 
@@ -35,7 +35,7 @@ th{
 		<tr>
 			<th>Name</th>
 			<th>Username</th>
-			<th>Password</th>
+			<th>Time Created</th>
 			<th></th>
 		</tr>
 		@if(count($users)<2)
@@ -49,9 +49,8 @@ th{
 				<tr>
 					<th>{{$user->name}}</th>
 					<th>{{$user->username}}</th>
-					<th><button>Change</button></th>
-					<th><button>Edit</button>
-						<button formmethod="get" formaction="/deleteAdmin" type="submit" name="user_id" value="{{$user->id}}">Delete</button></th>
+					<th>{{$user->created_at}}<th>
+					<th><button formmethod="get" formaction="/deleteAdmin" type="submit" name="user_id" value="{{$user->id}}">Delete</button></th>
 				</tr>
 				@endif
 			@endforeach
@@ -59,5 +58,5 @@ th{
 		@endif
 
 	</table>
-	<a href="/addAdmin"><button>Add Admin</button></a>
+	<a href="/addAdmin"><button>Add New Admin</button></a>
 @endsection

@@ -5,31 +5,30 @@
 @endsection
 
 @section('style')
-table {
-  width: 50%;
-  margin: auto;
-  background-color: black(0.5)
-}
+	table {
+	  width: 50%;
+	  margin: auto;
+	  background-color: black(0.5)
+	}
 
-table, th, td {
-    border: 5px solid white;
-    border-collapse: collapse;
-  font-size: 1em; 
-}
-th, td {
-    padding: 10px;
-    text-align: center;
-}
+	table, th, td {
+	    border: 5px solid white;
+	    border-collapse: collapse;
+	  font-size: 1em; 
+	}
+	th, td {
+	    padding: 10px;
+	    text-align: center;
+	}
 
-th{
-  background-color: white;
-  color:black;
-}
+	th{
+	  background-color: white;
+	  color:black;
+	}
 @endsection
 
 @section('content')
-	<h1>accepppppttt</h1>
-	isinya table<br>
+	<h1>Booking List</h1>
 	<table>	
 		<tr>
 			<th>Nama Event</th>
@@ -45,7 +44,7 @@ th{
 			<th>Surat Ijin</th>
 			<th>Status</th>
 		</tr>
-		@if(count($bookings)>1)
+		@if(count($bookings)>0)
 			@foreach($bookings as $booking)
 				<!--@if($booking['status_id']==1)-->
 					<tr>
@@ -61,11 +60,10 @@ th{
 						<th>{{$booking->peminjam->nohp_peminjam}}</th>
 						<th><button>Show</button></th>
 						<th><form action="/verify/{{$booking->id}}" input="hidden" method="post">{{csrf_field()}}<button value="1" name="action" >Accept</button>
-							<button value="-1" name="action">Ignore</button></form></th>
+							<button value="-1" name="action">Reject</button></form></th>
 					</tr>
 				<!--@endif-->
 			@endforeach
-			</form>
 		@endif
 	</table>
 @endsection

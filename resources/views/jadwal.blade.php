@@ -7,7 +7,6 @@
 
 @section('content')
 	<h1>Jadwal Page</h1>
-
 	@if(count($tempats)>0)
 		@foreach($tempats as $tempat)
 			@if($tempat['id']<16)
@@ -22,7 +21,36 @@
 
 		@foreach($tempats as $tempat)
 			@if($tempat['id']<16)
-				<p class="hehe" id="{{$tempat->id}}" style= "display:none;">This id is {{$tempat->id}}</p>
+			<div class="hehe" id="{{$tempat->id}}" style= "display:none;">
+				<p >This id is {{$tempat->id}}</p>
+				<table>	
+				<tr>
+					<th>Nama Event</th>
+					<th>Tempat</th>
+					<th>Jenis Kegiatan</th>
+					<th>Date</th>
+					<th>Time Start</th>
+					<th>Time End</th>
+					<th>Status</th>
+				</tr>
+				@if(count($bookings)>1)
+					@foreach($bookings as $booking)
+						@if($booking['tempat_id']==$tempat['id'] && $booking['status_id']!=3 && $booking['dateevent'])
+						<tr>
+							<th>{{$booking->namabooking}}</th>
+							<th>{{$booking->kegiatan->namakegiatan}}</th>
+							<th>{{$booking->tempat->namatempat}}</th>
+							<th>{{$booking->dateevent}}</th>
+							<th>{{$booking->start_time}}</th>
+							<th>{{$booking->end_time}}</th>
+							<th>{{$booking->status->namastatus}}</th>
+						</tr>
+						@endif
+					@endforeach
+
+				@endif
+				</table>
+			</div>
 			@endif
 		@endforeach
 
@@ -42,4 +70,5 @@
 			});
 		@endif
 	@endforeach
+
 @endsection

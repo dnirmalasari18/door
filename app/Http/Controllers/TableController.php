@@ -45,9 +45,9 @@ class TableController extends Controller
 
         $this->validate($request,[
             'rolepeminjam_id' => 'required|exists:rolepeminjams,id',
-            'namapeminjam' => 'required|string|max:100|regex:[\w ]',
+            'namapeminjam' => 'required|string|max:100|regex:[\w( )]',
             'nrp_nip' => 'required|string|min:10|regex:[\d]',
-            'nohp_peminjam' =>'required|string|min:11|regex:[\d]',
+            'nohp_peminjam' =>'required|string|min:11|max:13regex:[\d]',
             'kegiatan_id'=>'required|exists:kegiatans,id',
             'tempat_id'=>'required|exists:tempats,id|integer|max:15',
             'namabooking' =>'required|string|max:100',
@@ -91,7 +91,7 @@ class TableController extends Controller
 
 
             // redirect
-           return redirect('/bookHere')->with('message', 'The following errors occurred');
+           return redirect('/bookHere');
     }
 
     public function acceptBooking(Request $r,$id)
@@ -109,7 +109,7 @@ class TableController extends Controller
         //    echo "hmm";
         }
         $book->save();
-        return redirect('/accepting');
+        return redirect('/bookeDList');
         
     }
     

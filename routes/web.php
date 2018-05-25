@@ -13,37 +13,36 @@
 
 //Route::get('/', 'PageController@homepage');
 
-Route::get('/main', 'PageController@homepage');
+Route::get('/', 'PageController@homepage');
 Route::get('/schedule', 'PageController@jadwalpage');
 Route::get('/contact','PageController@contactpage');
 Route::get('/bookHere', 'PageController@bookinghere');
 Route::post('/bookHere/create','TableController@storePeminjamBooking');
-Route::get('/', function(){
-    return view('welcome');
-});
+//Route::get('/', function(){
+//    return view('welcome');
+//});
 
-
-/*Route::get('/hehe', 'PageController@index'){
-	return view('jadwal');
-}*/
 
 
 Auth::routes();
-/*Route::get('/register',function(){
-	return redirect('/main');
-});*/
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/accepting','HomeController@accepting');
+Route::get('/register',function(){
+	return redirect('/');
+});
+//Route::get('/home', 'HomeController@index')->name('home');
+
+//In booking list
+Route::get('/bookedList','HomeController@accepting');
 Route::post('/verify/{id}','TableController@acceptBooking');
 
+//To Change My Password
 Route::get('/changePassword','HomeController@showChangePassword');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
 
+//What Master Role Can Do
 Route::group(['middleware' => ['auth', 'master']], function() {
     Route::get('/admin','HomeController@adminpage');
     Route::get('/addAdmin','HomeController@tambahadminpage');
     Route::post('/addAdmin/create','TableController@storeUser');
-    /*terkait crud admin*/
     Route::get('/deleteAdmin','TableController@destroyUser');
 
 });

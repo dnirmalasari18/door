@@ -25,7 +25,7 @@ class Booking extends Model
     	return $this->belongsTo('App\Tempat','tempat_id','id');
     }
     public function Status(){
-        return $this->hasOne('App\Status');
+        return $this->belongsTo('App\Status','status_id','id');
     }
 
 }

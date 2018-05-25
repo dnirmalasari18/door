@@ -14,7 +14,7 @@
 			<ul>ngecek user exists</ul>
 		</li>
 	{!! Form::open(['action' => 'TableController@storePeminjamBooking','method'=>'POST','enctype' => 'multipart/form-data','autocomplete'=>'off']) !!}
-
+		{{csrf_field()}}
 		{{Form::label('namapeminjam', 'Name')}}
     	{{Form::text('namapeminjam')}} 
     	@if( $errors->has('namapeminjam') ? ' has-error' : '' )
@@ -45,14 +45,14 @@
     	
     	<br>
 		{{Form::label('kegiatan_id', 'Tipe Kegiatan')}}
-		{{ Form::select('kegiatan_id',[''=>'','1'=>'Kuliah','2'=>'Praktikum']) }}
+		{{ Form::select('kegiatan_id',[''=>'','1'=>'Kuliah','2'=>'Praktikum','3'=>'Asistensi/Sesi Lab', '4'=>'Seminar','5'=>'Pelatihan/Workshop', '6'=>'Kuliah Tamu','7'=>'Perlombaan','8'=>'Kelas Pengganti','9'=>'Kegiatan Lain-Lain Himpunan','10'=>'Kegiatan Lain-Lain Bem Fakultas','11'=>'Kegiatan Lain-Lain BSO Informatika']) }}
 		@if( $errors->has('kegiatan_id') ? ' has-error' : '' )
     		<strong>{{ $errors->first('kegiatan_id') }}</strong>
     	@endif
 
     	<br>
 		{{Form::label('tempat_id', 'Ruangan')}}
-		{{ Form::select('tempat_id',[''=>'','1'=>'IF-101','16'=>'LP'],' ') }}
+		{{ Form::select('tempat_id',[''=>'','1'=>'IF-101','2'=>'IF-102','3'=>'IF-103','4'=>'IF-104','5'=>'IF-105a','6'=>'IF105-b','7'=>'IF-106','8'=>'IF-108','9'=>'Plaza Mahasiswa','10'=>'Plaza Lama 1','11'=>'Plaza Lama 2','12'=>'Plaza Baru 1','13'=>'Plaza Baru 2', '14'=>'Lapangan','15'=>'Aula Informatika','16'=>'LP','17'=>'LP2']) }}
 		@if( $errors->has('tempat_id') ? ' has-error' : '' )
     		<strong>{!! $errors->first('tempat_id') !!}</strong>
     	@endif
@@ -94,12 +94,5 @@
 @endsection
 
 @section('script')
-$('#date').datepicker({ dateFormat: 'mm/dd/yyyy' }).val();
-<!--	var d = new Date();
-	document.getElementById("demo").min = d;
 
-	function myFunction() {
-    	var x = document.getElementById("myTime").max = "22:30";
-    	document.getElementById("demo").innerHTML = "You can't book it.";
-}-->
 @endsection

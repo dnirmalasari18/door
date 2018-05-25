@@ -14,7 +14,8 @@
 		</ul>
 	@endif-->
 	{!! Form::open(['action' => 'TableController@storeUser','method'=>'POST','enctype' => 'multipart/form-data','autocomplete'=>'off']) !!}
-	
+		{{csrf_field(())}}
+		
     	{{Form::label('name', 'Name')}}
     	{{Form::text('name')}} 
     	@if( $errors->has('name') ? ' has-error' : '' )
