@@ -15,7 +15,7 @@ class PeminjamsTableSeeder extends Seeder
         //
         Peminjam::create([
         	'namapeminjam'=>'Ivanda Zevi Amalia',
-            'rolepeminjam_id' => '4',
+            'rolepeminjam_id' => '2',
         	'nrp_nip'=>'5116100041',
             'nohp_peminjam'=>'081234431233',
     	]);

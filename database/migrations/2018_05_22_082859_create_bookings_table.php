@@ -29,8 +29,9 @@ class CreateBookingsTable extends Migration
                     ->references('id')->on('tempats')
                     ->onDelete('cascade');                
             $table->string('namabooking');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->date('dateevent');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')
                     ->references('id')->on('statuss')

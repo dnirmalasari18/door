@@ -17,7 +17,7 @@ Route::get('/main', 'PageController@homepage');
 Route::get('/schedule', 'PageController@jadwalpage');
 Route::get('/contact','PageController@contactpage');
 Route::get('/bookHere', 'PageController@bookinghere');
-Route::post('/bookHere/create','TableController@storePeminjam');
+Route::post('/bookHere/create','TableController@storePeminjamBooking');
 Route::get('/', function(){
     return view('welcome');
 });

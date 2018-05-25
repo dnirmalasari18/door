@@ -15,13 +15,7 @@ class RolePeminjamsTableSeeder extends Seeder
         	'namarole'=>'Dosen',
         ]);
         RolePeminjam::create([
-        	'namarole'=>'Himpunan',
-        ]);
-        RolePeminjam::create([
-        	'namarole'=>'Bem Fakultas',
-        ]);
-        RolePeminjam::create([
-        	'namarole'=>'BSO TC',
+        	'namarole'=>'Mahasiswa',
         ]);
     }
 }

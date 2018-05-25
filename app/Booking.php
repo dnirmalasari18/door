@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Peminjam as peminjam;
-use App\Kegiatan as kegiatan;
 use App\Tempat as tempat;
 use App\Status as status;
 class Booking extends Model
@@ -18,10 +17,10 @@ class Booking extends Model
     	return $this->hasOne('peminjam');
     }
     public  function Kegiatan(){
-    	return $this->hasOne('kegiatan');
+    	return $this->belongsTo('App\Kegiatan','kegiatan_id','id');
     }
     public function Tempat(){
-    	return $this->hasOne('tempat');
+    	return $this->belongsTo('tempat');
     }
     public function Status(){
         return $this->hasOne('status');

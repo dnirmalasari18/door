@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Peminjam;
+use App\Booking;
+use App\Kegiatan;
+use App\RolePeminjam;
+use App\Status;
+use App\Tempat;
 use Auth;
 use Hash;
 class HomeController extends Controller
@@ -28,7 +34,13 @@ class HomeController extends Controller
         return view('home');
     }
     public function accepting(){
-        return view('admin.accept');
+        $bookings=Booking::all();
+        $statuss=Status::all();
+        $tempats=Tempat::all();
+        $rolepminjams=RolePeminjam::all();
+        $kegiatans=Kegiatan::all();
+        $peminjams=Peminjam::all();
+        return view('admin.accept')->with('bookings',$bookings)->with('statuss',$statuss)->with('tempats',$tempats)->with('rolepeminjams',$rolepminjams)->with('kegiatans',$kegiatans)->with('peminjams',$peminjams);
     }
     public function adminpage(){
         $users=User::all();
