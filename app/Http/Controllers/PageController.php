@@ -36,5 +36,9 @@ class PageController extends Controller
     public function confirm(){
         return view('perijinan');
     }
+
+    public function upload(){
+        return view('uploadijin');
+    }
     
 }

@@ -12,11 +12,11 @@
 	        {{ session()->get('message') }}
 	    </div>
 	@endif   
-	<li>To DO list
-		<ul>randomizenya unique buat btoken</ul>
-		<ul>NRP + BTOKEN Exist -> bisa akses halaman upload</ul>
-		<ul>dari halaman /confirm/check ngepassing id booking buat masukin gambar ke db</ul>  
-	</li>
+	@if(session()->has('ololo'))
+	    <div class="alert alert-success">
+	        {{ session()->get('ololo') }}
+	    </div>
+	@endif  
 
 	<h1>Masukkan NRP dan Token Anda</h1>
 

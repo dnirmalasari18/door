@@ -20,7 +20,8 @@ Route::get('/bookHere', 'PageController@bookinghere');
 Route::post('/bookHere/create','TableController@storePeminjamBooking');
 Route::get('/confirm','PageController@confirm');
 Route::post('/confirm/check','TableController@awalUploadSurjin');
-Route::post('/confirm/check/upload','TableController@uploadSurjin');
+Route::get('/confirm/upload','PageController@upload');
+Route::post('/confirm/upload/check','TableController@uploadSurjin');
 //Route::get('/hehe', function(){
 //    return view('welcome');
 //});

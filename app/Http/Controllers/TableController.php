@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Peminjam;
 use App\Booking;
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -65,7 +66,7 @@ class TableController extends Controller
                 'dateevent'=>'required|date|after:today',
                 'start_time'=>'required|date_format:H:i| after:06:30| before:22:30',
                 'end_time'=>'required|date_format:H:i|after:start_time| before:22:30',
-                'image'=>'mimes:jpeg,jpg,png|max:10000'
+                'image'=>'mimes:jpeg,jpg,png|image|max:10000'
 
             ],[
                 'tempat_id.max'=> 'Want to book LP/LP2? Open <a target="blank" href="http://reservasi.lp.if.its.ac.id">LP</a> or <a target="blank" href="http://reservasi.lp2.if.its.ac.id">LP2</a>' ,
@@ -140,8 +141,6 @@ class TableController extends Controller
             'btoken' => 'required|string|min:7|max:7',
         ]);
 
-        //pertama nrp buat nyari id peminjam
-        //id peminjam nanti nyari id booking bareng btoken
         if (//Peminjam::where('nrp_nip', '=', Input::get('nrp_nip'))->exists()&& 
             Booking::where('btoken','=',Input::get('btoken'))->exists()) {
             /*$peminjam = Peminjam::select('id','nohp_peminjam')
@@ -151,8 +150,9 @@ class TableController extends Controller
                         ->where('btoken', Input::get('btoken'))
                         ->first();
             $yee=$booking->id;
-            echo $yee;
-                
+            //echo $yee;
+            Session::put('key', $yee);
+            return redirect('/confirm/upload');
         }
         else{
             return Redirect::back()
@@ -162,6 +162,28 @@ class TableController extends Controller
     } 
 
     public function uploadSurjin(Request $r){
+        $this->validate($r,[
+            'image'=>'required|image|mimes:jpeg,jpg,png|max:10000'
+        ]);
 
+        $value = Session::get('key');
+        echo $value;
+
+        //Booking::where('id', $value)
+        //        ->update(['image' => Input::file('image')]);
+ 
+        $r->file('image')->store('public/images');
+        $file_name = $r->file('image')->hashName();
+    
+    // save new image $file_name to database
+        Booking::where('id',$value)
+                ->update(['image' => $file_name]);
+        //eturn redirect('/confirm')
+        //    ->with('ololo', 'Upload successfull');
+        
     } 
+
+//    public function showImage(){
+//        return Storage::url();
+ //   }
 }
