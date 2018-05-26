@@ -8,16 +8,16 @@
 	<h1>Book Form</h1>
 	@if(session()->has('message'))
 	    <div class="alert alert-success">
+	    	<p>Upload perijinan dengan token berikut:</p>
 	        {{ session()->get('message') }}
 	    </div>
 	@endif
 		<li>yang belum solved
-			<ul>date ga bisa ngetag kemarin dr front end(kalo  back end bisa nolak)</ul>
-			<ul>waktu cuma bisa rentang 6.30 - 22.30</ul>
-			<ul>ngecek user exists tapi beda no hp trs jadinya ke update</ul>
+			<ul>date sama time ga bisa ngetag dr front end (optional)</ul>
 		</li>
 	{!! Form::open(['action' => 'TableController@storePeminjamBooking','method'=>'POST','enctype' => 'multipart/form-data','autocomplete'=>'off']) !!}
 		{{csrf_field()}}
+		
 		{{Form::label('namapeminjam', 'Name')}}
     	{{Form::text('namapeminjam')}} 
     	@if( $errors->has('namapeminjam') ? ' has-error' : '' )
@@ -89,6 +89,12 @@
     		<strong>{{ $errors->first('end_time') }}</strong>
     	@endif
 
+    	<br>
+		{{Form::label('image', 'Surat Perizinan(max 10 mb)')}}
+		{{ Form::file('image') }}
+		@if( $errors->has('image') ? ' has-error' : '' )
+    		<strong>{{ $errors->first('image') }}</strong>
+    	@endif
 
 		<br>
 		{{Form::submit('Submit')}}

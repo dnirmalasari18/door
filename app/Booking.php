@@ -13,6 +13,8 @@ class Booking extends Model
         'namabooking', 
         'start_time', 
         'end_time',
+        'image',
+        'btoken',
         'status_id',
     ];
     public function Peminjam(){

@@ -5,6 +5,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/schedule">Schedule</a></li>
         <li><a href="/contact">Contact</a></li>
+        <li><a href="/confirm">Confirm</a></li>
         @guest
           <li><a href="{{ route('login') }}">Sign In Admin</a></li>
         @else

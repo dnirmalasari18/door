@@ -18,7 +18,9 @@ Route::get('/schedule', 'PageController@jadwalpage');
 Route::get('/contact','PageController@contactpage');
 Route::get('/bookHere', 'PageController@bookinghere');
 Route::post('/bookHere/create','TableController@storePeminjamBooking');
-
+Route::get('/confirm','PageController@confirm');
+Route::post('/confirm/check','TableController@awalUploadSurjin');
+Route::post('/confirm/check/upload','TableController@uploadSurjin');
 //Route::get('/hehe', function(){
 //    return view('welcome');
 //});

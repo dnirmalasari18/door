@@ -32,5 +32,9 @@ class PageController extends Controller
     public function bookinghere(){
         return view('bookhere');
     }
+
+    public function confirm(){
+        return view('perijinan');
+    }
     
 }
