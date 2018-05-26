@@ -30,6 +30,11 @@
 
 @section('content')
 	<h1>Hello, {{ Auth::user()->name }}</h1>
+	@if(session()->has('message'))
+	    <div class="alert alert-success">
+	        {{ session()->get('message') }}
+	    </div>
+	@endif
 	
 	<table>	
 		<tr>

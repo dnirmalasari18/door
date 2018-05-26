@@ -6,15 +6,9 @@
 
 @section('content')
 	<h1>Form Tambah Admin</h1>
-	<!--@if(count($errors)>0)
-		<ul>
-			@foreach($errors->all() as $error)
-				<li>{{$error}}</li>
-			@endforeach
-		</ul>
-	@endif-->
+
 	{!! Form::open(['action' => 'TableController@storeUser','method'=>'POST','enctype' => 'multipart/form-data','autocomplete'=>'off']) !!}
-		{{csrf_field(())}}
+		{{csrf_field()}}
 		
     	{{Form::label('name', 'Name')}}
     	{{Form::text('name')}} 

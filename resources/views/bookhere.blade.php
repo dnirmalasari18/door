@@ -6,12 +6,15 @@
 
 @section('content')
 	<h1>Book Form</h1>
+	@if(session()->has('message'))
+	    <div class="alert alert-success">
+	        {{ session()->get('message') }}
+	    </div>
+	@endif
 		<li>yang belum solved
 			<ul>date ga bisa ngetag kemarin dr front end(kalo  back end bisa nolak)</ul>
 			<ul>waktu cuma bisa rentang 6.30 - 22.30</ul>
-			<ul>nama kok ga bisa 1 kata ya? kudu ada spasi</ul>
-			<ul>tempat, kegiatan belum semua dimasukin di select</ul>
-			<ul>ngecek user exists</ul>
+			<ul>ngecek user exists tapi beda no hp trs jadinya ke update</ul>
 		</li>
 	{!! Form::open(['action' => 'TableController@storePeminjamBooking','method'=>'POST','enctype' => 'multipart/form-data','autocomplete'=>'off']) !!}
 		{{csrf_field()}}

@@ -7,7 +7,7 @@ use App\RolePeminjam as role;
 class Peminjam extends Model
 {
     //
-
+ protected $nrp_nip;
     protected $fillable = [
         'rolepeminjam_id', 
         'namapeminjam', 

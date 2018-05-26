@@ -32,6 +32,8 @@ class CreateBookingsTable extends Migration
             $table->date('dateevent');
             $table->time('start_time');
             $table->time('end_time');
+            $table->binary('image');
+            $table->string('btoken');
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')
                     ->references('id')->on('statuss')

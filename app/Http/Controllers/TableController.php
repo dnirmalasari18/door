@@ -15,14 +15,14 @@ class TableController extends Controller
         $admin =User::find(Input::get('user_id'));
         $admin->delete();
 
-        return redirect('/admin');
+        return redirect('/admin')->with('message', 'Admin has been deleted!');
     }
 
     public function storeUser(Request $request)
     {
       	$this->validate($request,[
-      		'name' => 'required|string|max:255|regex:[A-Za-z ]',
-            'username' => 'required|string|max:20|unique:users,username',
+      		'name' => 'required|string|max:255|regex:/^[a-zA-Z-\'\s]+$/',
+            'username' => 'required|string|max:20|min:5|unique:users,username',
             'password' => 'required|string|min:6|confirmed',
       	]);
 
@@ -33,65 +33,64 @@ class TableController extends Controller
             $admin->save();
 
             // redirect
-            return redirect('/admin');  	
+            return redirect('/admin')->with('message', 'Admin has been added!');  	
     }
 
     public function storePeminjamBooking(Request $request){
-            /*$inputs = array(
-                'start_date' => '2013-01-20',
-                'end_date'   => '2013-01-15'
-            );*/
-        //$messages
+        if (Peminjam::where('nrp_nip', '=', Input::get('nrp_nip'))->exists()) {
+            $peminjam = Peminjam::select('id')
+                        ->where('nrp_nip', Input::get('nrp_nip'))
+                        ->first();
+            $hore= $peminjam->id;
+                
+        }
+        else{
+            $this->validate($request,[
+                'rolepeminjam_id' => 'required|exists:rolepeminjams,id',
+                'namapeminjam' => 'required|string|max:100|regex:/^[a-zA-Z-\'\s]+$/',
+                'nrp_nip' => 'required|string|min:10|regex:[\d]',
+                'nohp_peminjam' =>'required|string|min:11|max:13regex:[\d]',
+                'kegiatan_id'=>'required|exists:kegiatans,id',
+                'tempat_id'=>'required|exists:tempats,id|integer|max:15',
+                'namabooking' =>'required|string|max:100',
+                'dateevent'=>'required|date|after:today',
+                'start_time'=>'required|date_format:H:i',
+                'end_time'=>'required|date_format:H:i|after:start_time',
 
-        $this->validate($request,[
-            'rolepeminjam_id' => 'required|exists:rolepeminjams,id',
-            'namapeminjam' => 'required|string|max:100|regex:[\w( )]',
-            'nrp_nip' => 'required|string|min:10|regex:[\d]',
-            'nohp_peminjam' =>'required|string|min:11|max:13regex:[\d]',
-            'kegiatan_id'=>'required|exists:kegiatans,id',
-            'tempat_id'=>'required|exists:tempats,id|integer|max:15',
-            'namabooking' =>'required|string|max:100',
-            'dateevent'=>'required|date|after:today',
-            'start_time'=>'required|date_format:H:i',
-            'end_time'=>'required|date_format:H:i|after:start_time',
+            ],[
+                'tempat_id.max'=> 'Want to book LP/LP2? Open <a target="blank" href="http://reservasi.lp.if.its.ac.id">LP</a> or <a target="blank" href="http://reservasi.lp2.if.its.ac.id">LP2</a>' ,
+            ]);
 
-        ],[
-            'tempat_id.max'=> 'Want to book LP/LP2? Open <a target="blank" href="http://reservasi.lp.if.its.ac.id">LP</a> or <a target="blank" href="http://reservasi.lp2.if.its.ac.id">LP2</a>' ,
-        ]);
+                $peminjam = new Peminjam;
+                $peminjam->rolepeminjam_id = Input::get('rolepeminjam_id');
+                $peminjam->namapeminjam     = Input::get('namapeminjam');
+                $peminjam->nrp_nip = Input::get('nrp_nip');
+                $peminjam->nohp_peminjam = Input::get('nohp_peminjam');
+                $peminjam->save();
+                //echo $peminjam['id'];
+                $hore=$peminjam->id;
+        }
 
-            $peminjam = new Peminjam;
-            $peminjam->rolepeminjam_id = Input::get('rolepeminjam_id');
-            $peminjam->namapeminjam     = Input::get('namapeminjam');
-            $peminjam->nrp_nip = Input::get('nrp_nip');
-            $peminjam->nohp_peminjam = Input::get('nohp_peminjam');
-            $peminjam->save();
-            //echo $peminjam['id'];
+        $booking = new Booking;
+        $booking->kegiatan_id =Input::get('kegiatan_id');
+        $booking->peminjam_id = $hore;
+        $booking->tempat_id = Input::get('tempat_id');
+        $booking->namabooking = Input::get('namabooking');
+        $booking->dateevent = Input::get('dateevent');
+        $booking->start_time = Input::get('start_time');
+        $booking->end_time = Input::get('end_time');
 
-            $booking = new Booking;
-            $booking->kegiatan_id =Input::get('kegiatan_id');
-            $booking->peminjam_id = $peminjam['id'];
-            $booking->tempat_id = Input::get('tempat_id');
-            $booking->namabooking = Input::get('namabooking');
-            $booking->dateevent = Input::get('dateevent');
-            $booking->start_time = Input::get('start_time');
-            $booking->end_time = Input::get('end_time');
+        if($peminjam['rolepeminjam_id']==='1'){
+            $booking->status_id=2;
+        }
+        else{
+            $booking->status_id=1;
+        }
 
-            //echo $peminjam['rolepeminjam_id'];
-
-            if($peminjam['rolepeminjam_id']==='1'){
-                $booking->status_id=2;
-            }
-            else{
-                $booking->status_id=1;
-            }
-
-            
-            //echo $booking['status_id'];
-            $booking->save();
-
+        $booking->save();
 
             // redirect
-           return redirect('/bookHere');
+        return redirect('/bookHere')->with('message', 'Booked!');
     }
 
     public function acceptBooking(Request $r,$id)
@@ -109,8 +108,8 @@ class TableController extends Controller
         //    echo "hmm";
         }
         $book->save();
-        return redirect('/bookeDList');
-        
+
+        return redirect('bookedList')->with('message', 'Succesful!');
     }
     
 }

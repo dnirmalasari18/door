@@ -18,7 +18,8 @@ Route::get('/schedule', 'PageController@jadwalpage');
 Route::get('/contact','PageController@contactpage');
 Route::get('/bookHere', 'PageController@bookinghere');
 Route::post('/bookHere/create','TableController@storePeminjamBooking');
-//Route::get('/', function(){
+
+//Route::get('/hehe', function(){
 //    return view('welcome');
 //});
 
@@ -28,7 +29,7 @@ Auth::routes();
 Route::get('/register',function(){
 	return redirect('/');
 });
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 //In booking list
 Route::get('/bookedList','HomeController@accepting');

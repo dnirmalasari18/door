@@ -29,6 +29,12 @@
 
 @section('content')
 	<h1>Booking List</h1>
+	
+	@if(session()->has('message'))
+	    <div class="alert alert-success">
+	        {{ session()->get('message') }}
+	    </div>
+	@endif
 	<table>	
 		<tr>
 			<th>Nama Event</th>
