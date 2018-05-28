@@ -1,9 +1,9 @@
 @extends('layout.app')
 
 @section('title')
-	Home
+	pinjem.in - Peminjaman Ruang Informatika ITS
 @endsection
 
 @section('content')
-	<h1>Home Page</h1>
+
 @endsection

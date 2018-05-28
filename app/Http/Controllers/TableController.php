@@ -74,31 +74,36 @@ class TableController extends Controller
                 'end_time.after' => 'The end time must be a time after start time',
             ]);
 
+
+            $tempat=Input::get('tempat_id');
+            $date=Input::get('dateevent');
+            $stime=Input::get('start_time');
+            $etime=Input::get('end_time');
+
+            $querrr = DB::select("SELECT * FROM `bookings` 
+                        WHERE `tempat_id`=$tempat AND `dateevent`='$date' 
+                        AND(`start_time`<='$stime' or `end_time`>='$stime') /*mulai-selese di tengah*/
+                        and(`start_time`>='$etime' and `end_time`>='$etime') /*mulai lbh awal selese lbh awal*/
+                        /*OR (`end_time`>='$stime' AND `end_time`<='$etime')/*mulai di tengah slesai akhir*/
+                        /*OR(`start_time`<='$stime' AND `)
+                        /*OR (`start_time`>='$stime' AND `end_time`>='$etime')*/
+                        ");
+            if (count($querrr)>1)
+            {
+                
+               return redirect()->back()->withInput()->with('msg', 'You can\'t book that time');
+            }
                 $peminjam = new Peminjam;
                 $peminjam->rolepeminjam_id = Input::get('rolepeminjam_id');
                 $peminjam->namapeminjam     = Input::get('namapeminjam');
                 $peminjam->nrp_nip = Input::get('nrp_nip');
                 $peminjam->nohp_peminjam = Input::get('nohp_peminjam');
+                $peminjam->save();
                 $hore=$peminjam->id;
         }
 
-        $tempat=Input::get('tempat_id');
-        $date=Input::get('dateevent');
-        $stime=Input::get('start_time');
-        $etime=Input::get('end_time');
-
-        $query = DB::select("SELECT * FROM `bookings` 
-                    WHERE `tempat_id`=$tempat AND `dateevent`='$date' 
-                    AND(`start_time`>'$stime' and `end_time`>'$etime')
-                    or(`start_time`<'$stime' and `end_time`>'$etime')
-                    OR (`start_time`<'$stime' AND `end_time`>'$etime')
-                    OR (`start_time`<'$stime' AND `end_time`>'$etime')
-                    ");
-        if ($query>0)
-        {
-           return redirect()->back()->withInput()->with('message', 'You can\'t book that time');
-        }
-
+        
+        
         $booking = new Booking;
         $booking->kegiatan_id =Input::get('kegiatan_id');
         $booking->peminjam_id = $hore;
@@ -109,24 +114,20 @@ class TableController extends Controller
         $booking->end_time = Input::get('end_time');
         if($peminjam['rolepeminjam_id']==='1'){
             $booking->status_id=2;
-            $peminjam->save();
+            
             $booking->save();
-            return redirect('/bookHere')->with('message', 'Automatically Accepted!');
+            return redirect('/bookHere')->with('msg', 'Automatically Accepted!');
         }
 
         else{
             $booking->status_id=1;
             if(empty($booking->image)){
-            //    echo "its null";
-                //$token_id =str_random(7);
-                // (Peminjam::where('nrp_nip', '=', Input::get('nrp_nip'))->exists())
                 do {
                     $token_id =str_random(7);
                 } 
                 while (Booking::where("btoken", "=", $token_id) instanceof Booking);
 
                 $booking->btoken=$token_id;
-                $peminjam->save();
                 $booking->save();
                 return redirect('/bookHere')->with('message', $booking->btoken);
             }
@@ -154,15 +155,10 @@ class TableController extends Controller
     public function awalUploadSurjin(Request $r){
 
         $this->validate($r,[
-        //    'nrp_nip' => 'required|string|min:10|regex:[\d]',
             'btoken' => 'required|string|min:7|max:7',
         ]);
 
-        if (//Peminjam::where('nrp_nip', '=', Input::get('nrp_nip'))->exists()&& 
-            Booking::where('btoken','=',Input::get('btoken'))->exists()) {
-            /*$peminjam = Peminjam::select('id','nohp_peminjam')
-                        ->where('nrp_nip', Input::get('nrp_nip'))
-                        ->first();*/
+        if (Booking::where('btoken','=',Input::get('btoken'))->exists()) {
             $booking = Booking::select('id')
                         ->where('btoken', Input::get('btoken'))
                         ->first();
@@ -179,28 +175,27 @@ class TableController extends Controller
     } 
 
     public function uploadSurjin(Request $r){
-        $value = Session::get('key');
-        echo $value;
+        if($r->session()->has('key'))
+        {
+            $value=$r->session()->pull('key');
+        }
+        else{
+        //    return redirect('/confirm')->with('hmm','You need to have token first');
+        }
 
         $this->validate($r,[
             'image'=>'required|image|mimes:jpeg,jpg,png|max:10000'
         ]);
-
-        
-
-        //Booking::where('id', $value)
-        //        ->update(['image' => Input::file('image')]);
  
         $r->file('image')->store('public/images');
-        $file_name = $r->file('image')->hashName();
+        $file_name = $r->file('image');//->hashName();
     
-    // save new image $file_name to database
         Booking::where('id',$value)
                 ->update(['image' => $file_name]);
 
-       //$r->session()->flush();
-        return redirect('/confirm')
-            ->with('ololo', 'Upload successfull');
+       
+        //return redirect('/confirm')
+        //    ->with('ololo', 'Upload successfull');
         
     } 
 

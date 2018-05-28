@@ -17,7 +17,7 @@
 	        {{ session()->get('msg') }}
 	    </div>
 	@endif
-
+	
 	{!! Form::open(['action' => 'TableController@storePeminjamBooking','method'=>'POST','enctype' => 'multipart/form-data','autocomplete'=>'off']) !!}
 		{{csrf_field()}}
 

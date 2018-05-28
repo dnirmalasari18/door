@@ -80,7 +80,6 @@
 			<th>Date</th>
 			<th>Time Start</th>
 			<th>Time End</th>
-			<th>Perulangan</th>
 			<th>NRP</th>
 			<th>Nama Pemesan</th>
 			<th>Nomor HP Pemesan</th>
@@ -92,16 +91,15 @@
 				<!--@if($booking['status_id']==1)-->
 					<tr>
 						<th>{{$booking->namabooking}}</th>
-						<th>{{$booking->kegiatan->namakegiatan}}</th>
 						<th>{{$booking->tempat->namatempat}}</th>
+						<th>{{$booking->kegiatan->namakegiatan}}</th>
 						<th>{{$booking->dateevent}}</th>
 						<th>{{$booking->start_time}}</th>
 						<th>{{$booking->end_time}}</th>
-						<th><button id="btn{{$booking->id}}">Open Modal</button></th>
 						<th>{{$booking->peminjam->nrp_nip}}</th>
 						<th>{{$booking->peminjam->namapeminjam}}</th>
 						<th>{{$booking->peminjam->nohp_peminjam}}</th>
-						<th><img src="public/images/{{$booking->image}}" alt=""></th>
+						<th>blm bs show<img src="public/images/{{$booking->image}}" alt=""></th>
 						<th><form action="/verify/{{$booking->id}}" input="hidden" method="post">{{csrf_field()}}<button value="1" name="action" >Accept</button>
 							<button value="-1" name="action">Reject</button></form></th>
 					</tr>
@@ -118,6 +116,7 @@
 			@endforeach
 		@endif
 	</table>
+	<img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'"/>
 @endsection
 
 @section('script')

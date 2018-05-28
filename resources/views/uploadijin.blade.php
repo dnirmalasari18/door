@@ -10,6 +10,7 @@
 	    <div class="alert alert-success">
 	        {{ session()->get('key') }}
 	    </div>
+
 	@endif   
 
 	<h1>Upload Foto</h1>
