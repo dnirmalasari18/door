@@ -5,6 +5,7 @@ use App\User;
 use App\Peminjam;
 use App\Booking;
 use Session;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,6 @@ class TableController extends Controller
 {
     public function destroyUser()
     {
-        // delete
         $admin =User::find(Input::get('user_id'));
         $admin->delete();
 
@@ -34,7 +34,6 @@ class TableController extends Controller
             $admin->password = bcrypt(Input::get('password'));
             $admin->save();
 
-            // redirect
             return redirect('/admin')->with('message', 'Admin has been added!');  	
     }
 
@@ -51,9 +50,9 @@ class TableController extends Controller
             if($hp!==Input::get('nohp_peminjam')){
                 Peminjam::where('id', $hore)
                     ->update(['nohp_peminjam' => Input::get('nohp_peminjam')]);
-            }
-                
+            }       
         }
+
         else{
             $this->validate($request,[
                 'rolepeminjam_id' => 'required|exists:rolepeminjams,id',
@@ -66,7 +65,6 @@ class TableController extends Controller
                 'dateevent'=>'required|date|after:today',
                 'start_time'=>'required|date_format:H:i| after:06:30| before:22:30',
                 'end_time'=>'required|date_format:H:i|after:start_time| before:22:30',
-                'image'=>'mimes:jpeg,jpg,png|image|max:10000'
 
             ],[
                 'tempat_id.max'=> 'Want to book LP/LP2? Open <a target="blank" href="http://reservasi.lp.if.its.ac.id">LP</a> or <a target="blank" href="http://reservasi.lp2.if.its.ac.id">LP2</a>' ,
@@ -81,9 +79,24 @@ class TableController extends Controller
                 $peminjam->namapeminjam     = Input::get('namapeminjam');
                 $peminjam->nrp_nip = Input::get('nrp_nip');
                 $peminjam->nohp_peminjam = Input::get('nohp_peminjam');
-                $peminjam->save();
-                //echo $peminjam['id'];
                 $hore=$peminjam->id;
+        }
+
+        $tempat=Input::get('tempat_id');
+        $date=Input::get('dateevent');
+        $stime=Input::get('start_time');
+        $etime=Input::get('end_time');
+
+        $query = DB::select("SELECT * FROM `bookings` 
+                    WHERE `tempat_id`=$tempat AND `dateevent`='$date' 
+                    AND(`start_time`>'$stime' and `end_time`>'$etime')
+                    or(`start_time`<'$stime' and `end_time`>'$etime')
+                    OR (`start_time`<'$stime' AND `end_time`>'$etime')
+                    OR (`start_time`<'$stime' AND `end_time`>'$etime')
+                    ");
+        if ($query>0)
+        {
+           return redirect()->back()->withInput()->with('message', 'You can\'t book that time');
         }
 
         $booking = new Booking;
@@ -94,25 +107,30 @@ class TableController extends Controller
         $booking->dateevent = Input::get('dateevent');
         $booking->start_time = Input::get('start_time');
         $booking->end_time = Input::get('end_time');
-        $booking->image = Input::get('image');
         if($peminjam['rolepeminjam_id']==='1'){
             $booking->status_id=2;
+            $peminjam->save();
             $booking->save();
             return redirect('/bookHere')->with('message', 'Automatically Accepted!');
         }
+
         else{
             $booking->status_id=1;
             if(empty($booking->image)){
             //    echo "its null";
-                $token_id =str_random(7);
+                //$token_id =str_random(7);
+                // (Peminjam::where('nrp_nip', '=', Input::get('nrp_nip'))->exists())
+                do {
+                    $token_id =str_random(7);
+                } 
+                while (Booking::where("btoken", "=", $token_id) instanceof Booking);
+
                 $booking->btoken=$token_id;
+                $peminjam->save();
                 $booking->save();
                 return redirect('/bookHere')->with('message', $booking->btoken);
             }
         }
-
-        //$booking->save();
-        //return redirect('/bookHere')->with('message', $booking->btoken);
     }
 
     public function acceptBooking(Request $r,$id)
@@ -127,7 +145,6 @@ class TableController extends Controller
         }
         else if ($r['action']==-1){
             $book->status_id=3;    
-        //    echo "hmm";
             $book->save();
 
             return redirect('bookedList')->with('message', 'Booking Form Rejected!');
@@ -150,7 +167,7 @@ class TableController extends Controller
                         ->where('btoken', Input::get('btoken'))
                         ->first();
             $yee=$booking->id;
-            //echo $yee;
+            
             Session::put('key', $yee);
             return redirect('/confirm/upload');
         }
@@ -162,12 +179,14 @@ class TableController extends Controller
     } 
 
     public function uploadSurjin(Request $r){
+        $value = Session::get('key');
+        echo $value;
+
         $this->validate($r,[
             'image'=>'required|image|mimes:jpeg,jpg,png|max:10000'
         ]);
 
-        $value = Session::get('key');
-        echo $value;
+        
 
         //Booking::where('id', $value)
         //        ->update(['image' => Input::file('image')]);
@@ -178,12 +197,15 @@ class TableController extends Controller
     // save new image $file_name to database
         Booking::where('id',$value)
                 ->update(['image' => $file_name]);
-        //eturn redirect('/confirm')
-        //    ->with('ololo', 'Upload successfull');
+
+       //$r->session()->flush();
+        return redirect('/confirm')
+            ->with('ololo', 'Upload successfull');
         
     } 
 
-//    public function showImage(){
-//        return Storage::url();
- //   }
+
+    public function showImage(){
+
+    }
 }

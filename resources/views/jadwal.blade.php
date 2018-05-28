@@ -7,6 +7,8 @@
 
 @section('content')
 	<h1>Jadwal Page</h1>
+
+
 	@if(count($tempats)>0)
 		@foreach($tempats as $tempat)
 			@if($tempat['id']<16)

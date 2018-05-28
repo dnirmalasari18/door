@@ -12,12 +12,15 @@
 	        {{ session()->get('message') }}
 	    </div>
 	@endif
-		<li>yang belum solved
-			<ul>date sama time ga bisa ngetag dr front end (optional)</ul>
-		</li>
+	@if(session()->has('msg'))
+	    <div class="alert alert-success">
+	        {{ session()->get('msg') }}
+	    </div>
+	@endif
+
 	{!! Form::open(['action' => 'TableController@storePeminjamBooking','method'=>'POST','enctype' => 'multipart/form-data','autocomplete'=>'off']) !!}
 		{{csrf_field()}}
-		
+
 		{{Form::label('namapeminjam', 'Name')}}
     	{{Form::text('namapeminjam')}} 
     	@if( $errors->has('namapeminjam') ? ' has-error' : '' )
@@ -89,12 +92,6 @@
     		<strong>{{ $errors->first('end_time') }}</strong>
     	@endif
 
-    	<br>
-		{{Form::label('image', 'Surat Perizinan(max 10 mb)')}}
-		{{ Form::file('image') }}
-		@if( $errors->has('image') ? ' has-error' : '' )
-    		<strong>{{ $errors->first('image') }}</strong>
-    	@endif
 
 		<br>
 		{{Form::submit('Submit')}}

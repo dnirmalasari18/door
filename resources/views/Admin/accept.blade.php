@@ -101,7 +101,7 @@
 						<th>{{$booking->peminjam->nrp_nip}}</th>
 						<th>{{$booking->peminjam->namapeminjam}}</th>
 						<th>{{$booking->peminjam->nohp_peminjam}}</th>
-						<th><button>Show</button></th>
+						<th><img src="public/images/{{$booking->image}}" alt=""></th>
 						<th><form action="/verify/{{$booking->id}}" input="hidden" method="post">{{csrf_field()}}<button value="1" name="action" >Accept</button>
 							<button value="-1" name="action">Reject</button></form></th>
 					</tr>
@@ -111,7 +111,7 @@
 					  <!-- Modal content -->
 						<div class="modal-content">
 					    	<span class="close">&times;</span>
-					    	<!--<img src="{{ asset('public/images/' . $booking->image) }}">-->
+					    	<img src="{{ asset('public/images/' . $booking->image) }}">
 					  	</div>
 					</div>
 				<!--@endif-->
