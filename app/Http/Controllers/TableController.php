@@ -175,32 +175,23 @@ class TableController extends Controller
     } 
 
     public function uploadSurjin(Request $r){
-        if($r->session()->has('key'))
-        {
-            $value=$r->session()->pull('key');
-        }
-        else{
-        //    return redirect('/confirm')->with('hmm','You need to have token first');
-        }
-
+        $value=Session::get('key');
         $this->validate($r,[
             'image'=>'required|image|mimes:jpeg,jpg,png|max:10000'
         ]);
  
-        $r->file('image')->store('public/images');
+       $r->file('image')->storeAs('public/images', $value.'.jpg');
         $file_name = $r->file('image');//->hashName();
-    
+        
+
         Booking::where('id',$value)
                 ->update(['image' => $file_name]);
 
        
-        //return redirect('/confirm')
-        //    ->with('ololo', 'Upload successfull');
-        
+        return redirect('/confirm')
+            ->with('ololo', 'Upload successfull');
+
+      
     } 
 
-
-    public function showImage(){
-
-    }
 }

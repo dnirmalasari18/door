@@ -36,6 +36,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //In booking list
 Route::get('/bookedList','HomeController@accepting');
+Route::get('/pic', function($id){
+	return view('huhu');
+});
 Route::post('/verify/{id}','TableController@acceptBooking');
 
 //To Change My Password
