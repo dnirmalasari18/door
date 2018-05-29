@@ -82,11 +82,9 @@ class TableController extends Controller
 
             $querrr = DB::select("SELECT * FROM `bookings` 
                         WHERE `tempat_id`=$tempat AND `dateevent`='$date' 
-                        AND(`start_time`<='$stime' or `end_time`>='$stime') /*mulai-selese di tengah*/
-                        and(`start_time`>='$etime' and `end_time`>='$etime') /*mulai lbh awal selese lbh awal*/
-                        /*OR (`end_time`>='$stime' AND `end_time`<='$etime')/*mulai di tengah slesai akhir*/
-                        /*OR(`start_time`<='$stime' AND `)
-                        /*OR (`start_time`>='$stime' AND `end_time`>='$etime')*/
+                        AND((`start_time`<='$stime' AND `end_time`>='$stime') 
+                        or(`start_time`<='$etime' and `end_time`>='$etime') 
+                        or (`start_time`<='$stime' and `end_time`<='$etime'))
                         ");
             if (count($querrr)>1)
             {

@@ -56,6 +56,18 @@
     </div>
     <!-- ***** Breadcumb Area End ***** -->
 
+        <div class="dorne-contact-area d-md-flex" id="contact">
+            <div class="contact-form-area equal-height">
+                <div class="contact-form">
+                    <div class="contact-form-title">
+                        <h4 align="center">Teknik Informatika ITS</h4>
+                        <br>
+                        <h6><strong>Alamat:</strong> Keputih, Sukolilo, Surabaya City, East Java 60117</h6>
+                        <h6><strong>Telepon:</strong> (031) 5939214</h6>   
+                    </div>
+                </div>
+            </div>
+        </div>
 
      <!-- ****** Footer Area Start ****** -->
     <footer class="dorne-footer-area">
