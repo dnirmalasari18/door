@@ -159,20 +159,23 @@ class TableController extends Controller
         ]);
 
         if (Booking::where('btoken','=',Input::get('btoken'))->exists()) {
-            $booking = Booking::select('id')
+            $booking = Booking::select('id','image')
                         ->where('btoken', Input::get('btoken'))
                         ->first();
             $yee=$booking->id;
-            
+            if(!is_null($booking->image)){
+                return redirect('/confirm')->with('ololo','You already upload photo');
+            }
             Session::put('key', $yee);
             return redirect('/confirm/upload');
         }
         else{
-            return Redirect::back()
+           return Redirect::back()
                 ->withInput(Input::all())
-                ->with('message', 'We can\'t find your booking');
+                ->with('ololo', 'We can\'t find your booking');
         }
     } 
+
 
     public function uploadSurjin(Request $r){
         $value=Session::get('key');

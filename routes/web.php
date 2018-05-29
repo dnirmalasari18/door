@@ -45,6 +45,10 @@ Route::post('/verify/{id}','TableController@acceptBooking');
 Route::get('/changePassword','HomeController@showChangePassword');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
 
+//schedule admin
+Route::get('/scheduleAdmin', 'HomeController@jadwaladminpage');
+
+
 //What Master Role Can Do
 Route::group(['middleware' => ['auth', 'master']], function() {
     Route::get('/admin','HomeController@adminpage');

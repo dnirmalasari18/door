@@ -42,6 +42,15 @@ class HomeController extends Controller
         $peminjams=Peminjam::all();
         return view('admin.accept')->with('bookings',$bookings)->with('statuss',$statuss)->with('tempats',$tempats)->with('rolepeminjams',$rolepminjams)->with('kegiatans',$kegiatans)->with('peminjams',$peminjams);
     }
+     public function jadwaladminpage(){
+        $tempats=Tempat::all();
+        $bookings=Booking::all();
+        $statuss=Status::all();
+        $rolepminjams=RolePeminjam::all();
+        $kegiatans=Kegiatan::all();
+        $peminjams=Peminjam::all();
+        return view('admin.jadwaladmin')->with('bookings',$bookings)->with('statuss',$statuss)->with('tempats',$tempats)->with('rolepeminjams',$rolepminjams)->with('kegiatans',$kegiatans)->with('peminjams',$peminjams);
+    }
     public function adminpage(){
         $users=User::all();
         return view('admin.admin')->with('users',$users);

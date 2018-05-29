@@ -1,32 +1,9 @@
 @extends('layout.app')
 
 @section('title')
-    Admin Master Page
+    Jadwal
 @endsection
 
-@section('style')
-table {
-  width: 50%;
-  margin: auto;
-  background-color: black(0.5)
-}
-
-table, th, td {
-    border: 5px solid white;
-    border-collapse: collapse;
-  font-size: 1em; 
-}
-th, td {
-    padding: 10px;
-    text-align: center;
-}
-
-th{
-  background-color: white;
-  color:black;
-}
-
-@endsection
 
 @section('content')
  <!-- Preloader -->
@@ -48,10 +25,10 @@ th{
                                 <li class="nav-item">
                                     <a class="nav-link" href="/home">Home</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="/scheduleAdmin">Schedule</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="/admin">Admin</a>
                                 </li>
                             </ul>
@@ -88,57 +65,72 @@ th{
     <!-- ***** Breadcumb Area Start ***** -->
     <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/tc.png)">
     </div>
-    <!-- ***** Breadcumb Area End ***** -->
 
-    <!-- ***** Admin Area Start ***** -->
-        <div class="dorne-contact-area d-md-flex" id="contact">
-            <div class="contact-form-area equal-height">
-                <div class="contact-form">
-                    <div class="contact-form-title">
-                        <h3 align="center">Hello, {{ Auth::user()->name }}</h3>
-                         @if(session()->has('message'))
-                            <div class="alert alert-success">
-                                {{ session()->get('message') }}
-                            </div>
-                         @endif
-                    </div>
-        
-                    <table> 
-                        <tr>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Time Created</th>
-                            <th></th>
-                        </tr>
+     <!-- Hero Search Form -->
+    <div class="hero-search-form">
+        <!-- Tabs -->
+        <div class="nav nav-tabs" id="heroTab" role="tablist">
 
-                        @if(count($users)<2)
+            @if(count($tempats)>0)
+                @foreach($tempats as $tempat)
+                    @if($tempat['id']<16)
+                        <a class="nav-item nav-link" id="button{{$tempat->id}}" data-toggle="tab" href="#nav-places" role="tab" aria-controls="nav-places" aria-selected="true">{{$tempat->namatempat}}</a>
+                    @elseif($tempat['id']===16)
+                        <a class="nav-item nav-link" id="button{{$tempat->id}}" target="blank" href="http://reservasi.lp.if.its.ac.id" aria-controls="nav-events" aria-selected="true">{{$tempat->namatempat}}</a>
+                    @elseif($tempat['id']===17)
+                        <a class="nav-item nav-link" id="button{{$tempat->id}}" target="blank" href="http://reservasi.lp2.if.its.ac.id" aria-controls="nav-events" aria-selected="true">{{$tempat->namatempat}}</a>
+                    @endif
+                @endforeach
+            <br>
+
+        </div>
+
+
+            <div class="tab-content" id="nav-tabContent">  
+                <div class="tab-pane show active" id="nav-events" role="tabpanel" aria-labelledby="nav-events-tab">
+                    @foreach($tempats as $tempat)
+                        @if($tempat['id']<16)
+                        <div class="hehe" id="{{$tempat->id}}" style= "display:none;">
+                            <table style="margin-left: 170px"> 
                             <tr>
-                                <th colspan="4">You are the only admin here</th>
+                                <th style="width: 21%">Nama Event</th>
+                                <th style="width: 10%">Tempat</th>
+                                <th style="width: 19%">Jenis Kegiatan</th>
+                                <th style="width: 13%">Date</th>
+                                <th style="width: 12.5%">Time Start</th>
+                                <th style="width: 12.5%">Time End</th>
+                                <th style="width: 12%">Status</th>
                             </tr>
-                        @elseif(count($users)>1)
-                            <form>
-                            @foreach($users as $user)
-                                @if($user->role!=="master")
-                                <tr>
-                                    <th>{{$user->name}}</th>
-                                    <th>{{$user->username}}</th>
-                                    <th>{{$user->created_at}}<th>
-                                    <button class="btn dorne-btn" formmethod="get" formaction="/deleteAdmin" type="submit" name="user_id" value="{{$user->id}}">Delete</button>
-                                </tr>
-                                @endif
-                            @endforeach
-                            </form>
+                            @if(count($bookings)>1)
+                                @foreach($bookings as $booking)
+                                    @if($booking['tempat_id']==$tempat['id'] && $booking['status_id']!=3)
+                                    <tr>
+                                        <th>{{$booking->namabooking}}</th>
+                                        <th>{{$booking->tempat->namatempat}}</th>
+                                        <th>{{$booking->kegiatan->namakegiatan}}</th>
+                                        <th>{{$booking->dateevent}}</th>
+                                        <th>{{$booking->start_time}}</th>
+                                        <th>{{$booking->end_time}}</th>
+                                        <th>{{$booking->status->namastatus}}</th>
+                                    </tr>
+                                    @endif
+                                @endforeach
+                            @endif
+                            </table>
+                         </div>
                         @endif
-
-                    </table>
-                    <br>
-                    <a href="/addAdmin"><button style="margin-left: 40%" class="btn dorne-btn">Add New Admin</button></a>
+                    @endforeach
+               
+                        @else
+                            <p>No data found</p>
+                        @endif
                 </div>
             </div>
-        </div>
-    <!-- ***** Admin Area End ***** -->
+    </div>
 
-     <!-- ****** Footer Area Start ****** -->
+
+
+ <!-- ****** Footer Area Start ****** -->
     <footer class="dorne-footer-area">
         <div class="container-fluid">
             <div class="row">
@@ -155,9 +147,18 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </footer>
 
-
-   
 </body>
+@endsection
 
-
+@section('script')
+    @foreach($tempats as $tempat)
+        @if($tempat['id']<16)
+            $(document).ready(function(){
+                $("#button{{$tempat->id}}").click(function(){
+                    $(".hehe").hide();
+                    $("#{{$tempat->id}}").show();
+                });
+            });
+        @endif
+    @endforeach
 @endsection

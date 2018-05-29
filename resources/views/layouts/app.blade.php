@@ -10,30 +10,40 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        
+        <!-- Responsive -->
+        <link href="css/responsive/responsive.css" rel="stylesheet">
+        
+        <!-- Favicon -->
+        <link rel="icon" href="img/core-img/favicon.ico">
+
+        <!-- Core Stylesheet -->
+        <link href="style.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <!--<nav class="navbar navbar-default navbar-static-top">
             <div class="container">
-                <div class="navbar-header">
+                <div class="navbar-header"> -->
 
-                    <!-- Collapsed Hamburger -->
+                    <!-- Collapsed Hamburger  
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
                         <span class="sr-only">Toggle Navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                    </button>
+                    </button> --> 
 
-                    <!-- Branding Image -->
+                    <!-- Branding Image 
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <div class="collapse navbar-collapse" id="app-navbar-collapse"> -->
+                <div>
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
@@ -44,6 +54,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
+                        
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
@@ -75,5 +86,16 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- jQuery-2.2.4 js -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap-4 js -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="js/others/plugins.js"></script>
+    <!-- Active JS -->
+    <script src="js/active.js"></script>
 </body>
 </html>
